@@ -21,3 +21,9 @@ The FJLT guarntes that if $q \sim \frac{\log^2 N}{d}$ then with high probability
 <br>
 
 In our recent paper [The Fast Johnson-Lindenstrauss tranform is even faster](https://arxiv.org/abs/2204.01800), we analyze and improve the bound on $q$, for which the FJLT guarantee holds. Roughly, we show that setting $q \sim \frac{\log N}{d}$ sufices.  
+
+## Work in progress:
+-- write expirements to see how various values of q influence the w.c. quality of the embedding (for fixed k, N, eps, q is a function of these)
+-- how q influences the average dist. quality. Compare with our Approx. In terms of speed? As well 
+-- implement the Kac JL method, and play with to comapre 
+
