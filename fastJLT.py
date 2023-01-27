@@ -41,8 +41,16 @@ class FastJLT:
         rand_diag=np.random.randint(0,2, size=size)*2-1
         return(np.diag(rand_diag))
     
-   def _sample_P_matrix(self, rows, cols, q, sparse):
-       
+    
+   #returns non normalized , have to normalize by 1/sqrt{q} later 
+    def _sample_P_matrix(self, rows, cols, q, sparse):
+       if(sparse):
+           random_P=np.random.choice(np.array([0, 1, -1]), (rows,cols), p=[1-q, q/2, q/2])
+       else:
+           tmp_P=np.random.choice(np.array([0,1]), (rows, cols), p=[1-q,q])
+           normal_P=np.random.standard_normal(size=(rows,cols))
+           random_P=np.multiply(tmp_P, normal_P)
+           return(random_P)
         
     #the data matrix X contains data vectors in the columns, size: d by N    
     def fit_transform(self, X, sparsity_q="auto", sparse=False):
@@ -63,7 +71,12 @@ class FastJLT:
         if isinstance (sparsity_q, str):
             sparsity_q=min(1, (20*math.log(N,2)**2)/d)
         P_matrix=self._sample_P_matrix(new_dims, d, sparsity_q, sparse)
-        
+        #apply the matrix computations
+        appl_D=D_matrix @ X
+        appl_Had=fwht_matrix(appl_D)
+        result=P_matrix @ appl_Had
+        fitted_data=result*(1/math.sqrt(new_dims))*(1/math.sqrt(sparsity_q))
+        return(fitted_data)
         
 
 
