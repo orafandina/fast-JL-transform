@@ -18,8 +18,17 @@ def fwht(x):
     part_2=np.vstack((res_2, res_2*(-1)))
     return(part_1+part_2)
 
+#the data is in the columns of X, X of size d by N
 def fwht_matrix(data):
-    
+    d, N=data.shape
+    result=np.zeros((N,d))
+    print(result)
+    for i in range(N):
+        data_point=np.transpose(data)[i]
+        result[i]=np.reshape(fwht(data_point),(d,))
+    return np.transpose(result)
+
+
 
 class FastJLT:
     def __init__(self, target_dim="auto", epsilon="0.1"):
