@@ -41,7 +41,8 @@ class FastJLT:
         rand_diag=np.random.randint(0,2, size=size)*2-1
         return(np.diag(rand_diag))
     
-   # def _sample_P_matrix(self, rows, cols, sparcity):
+   def _sample_P_matrix(self, rows, cols, q, sparse):
+       
         
     #the data matrix X contains data vectors in the columns, size: d by N    
     def fit_transform(self, X, sparsity_q="auto", sparse=False):
@@ -59,7 +60,10 @@ class FastJLT:
         else:
             new_dims=self.target_dim   
         D_matrix=self._sample_D_matrix(d)
-        #H_matrix=hadamard(d)
+        if isinstance (sparsity_q, str):
+            sparsity_q=min(1, (20*math.log(N,2)**2)/d)
+        P_matrix=self._sample_P_matrix(new_dims, d, sparsity_q, sparse)
+        
         
 
 
