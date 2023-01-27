@@ -22,7 +22,6 @@ def fwht(x):
 def fwht_matrix(data):
     d, N=data.shape
     result=np.zeros((N,d))
-    print(result)
     for i in range(N):
         data_point=np.transpose(data)[i]
         result[i]=np.reshape(fwht(data_point),(d,))
@@ -81,4 +80,3 @@ class FastJLT:
 
 
 
- 
